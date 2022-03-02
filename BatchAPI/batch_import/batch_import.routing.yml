@@ -1,0 +1,7 @@
+batch_import.nodeimport:
+  path: '/admin/batch-import-example'
+  defaults:
+    _form: '\Drupal\batch_import\Form\ImportForm'
+    _title: 'Import animals'
+  requirements:
+    _permission: 'access content'
