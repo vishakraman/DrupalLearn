@@ -1,0 +1,10 @@
+
+1. HOOKS
+------
+http://api.hostdog.eu/api/drupal-9/9.x     [important]
+
+2. Important OOP Concepts For Drupal Developers To Create Custom Modules
+---------------------------------------------------------------
+https://opensenselabs.com/blog/tech/drupal-developers-oop-custom-modules#:~:text=Drupal%208%20uses%20a%20PHP,in%20a%20better%20way%20possible.
+
+3. https://codimth.com/   
