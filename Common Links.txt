@@ -1,7 +1,7 @@
 
 1. HOOKS
 ------
-http://api.hostdog.eu/api/drupal-9/9.x     [important]
+http://api.hostdog.eu/api/drupal-9/drupal%21core%21includes%21module.inc/group/hooks/9.x    [important]
 
 2. Important OOP Concepts For Drupal Developers To Create Custom Modules
 ---------------------------------------------------------------
