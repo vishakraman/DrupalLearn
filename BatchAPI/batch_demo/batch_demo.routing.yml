@@ -1,0 +1,7 @@
+batch_demo.delete_node_example:
+  path: '/batch-example/delete'
+  defaults:
+    _form: '\Drupal\batch_demo\Form\DeleteNodeForm'
+    _title: 'Demo of batch processing'
+  requirements:
+    _permission: 'access content'
