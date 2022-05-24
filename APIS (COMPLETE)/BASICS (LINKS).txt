@@ -1,0 +1,25 @@
+
+LEVEL 1
+https://www.mulesoft.com/resources/api/what-is-an-api
+https://www.guru99.com/what-is-api.html  
+
+LEVEL 2 
+https://assertible.com/blog/7-http-methods-every-web-developer-should-know-and-how-to-test-them
+https://www.w3schools.com/tags/ref_httpmethods.asp
+
+LEVEL 3
+https://www.geeksforgeeks.org/why-use-guzzle-instead-of-curl-in-php/
+https://medium.com/hackernoon/creating-rest-api-in-php-using-guzzle-d6a890499b02
+
+API RESPONSE CODES
+https://www.softwaretestinghelp.com/rest-api-response-codes/
+
+TESTING THE APIs
+
+BROWSER
+https://support.demandbase.com/hc/en-us/articles/205180803-Checking-the-API-Response-with-your-Browser
+
+POSTMAN
+https://www.guru99.com/postman-tutorial.html 
+
+
