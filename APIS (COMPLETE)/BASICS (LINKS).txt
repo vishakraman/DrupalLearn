@@ -21,5 +21,3 @@ https://support.demandbase.com/hc/en-us/articles/205180803-Checking-the-API-Resp
 
 POSTMAN
 https://www.guru99.com/postman-tutorial.html 
-
-
