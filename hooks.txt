@@ -1,0 +1,201 @@
+List of hooks and its useful
+—--------------------------------
+Implements hook_help().
+function vol_events_help($route_name, RouteMatchInterface $route_match) {
+This hook is used to show in the module page. Provide online user help.
+}
+Implements hook_page_attachments().
+function vol_events_page_attachments(array &$attachments) {
+This hook is used to add attachments to the page
+$attachments['#attached']['library'][] = 'vol_admin/vol_admin';
+}
+Implements hook_field_widget_WIDGET_TYPE_form_alter().
+function
+vol_events_field_widget_entity_reference_paragraphs_form_alter(&$element,
+&$form_state, $context) {
+This hook is used for altering any entity reference field.
+if ($element['#paragraph_type'] == 'evt_new_shift') {
+$element['subform']['field_shift_id']['#attributes']['class'][] =
+'visually-hidden';
+}
+}
+Implements hook_entity_field_access().
+function vol_events_entity_field_access($operation,
+FieldDefinitionInterface $field_definition, AccountInterface $account,
+FieldItemListInterface $items = NULL) {
+This hook is used for have access to field
+}
+Implements hook_node_presave().
+function vol_events_node_presave(NodeInterface $node) {
+This hook is used for changing particular node once the form is save
+if ($node->bundle() == 'event') {
+}
+// Load the node
+$new_project =
+Node::load($node->get('field_evt_teambuild_project')->getString());
+//Get the node
+$node->get('field_evt_base_community')->target_id
+}
+Implements hook_entity_presave().
+function vol_events_entity_presave(EntityInterface $entity) {
+This Hook is used for making the changes for the entity after its saved.
+if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'event'
+&& $entity->hasField('field_duration_toggle')) {
+//create multiple array dynamically
+$populatedDuration[] =
+[
+'duration' => 'PT' . $hourval . 'H',
+'seconds' => $i * $interval_seconds ,
+];
+}
+}
+}
+Implements hook_ENTITY_TYPE_insert() for node entities.
+function vol_events_node_insert(NodeInterface $node) {
+This tests saving a node on node insert.
+}
+Implements hook_form_alter().
+function vol_events_form_alter(&$form, FormStateInterface $form_state,
+$form_id) {
+Perform alterations before a form is rendered.
+if($form_id == 'node_event_edit_form' || $form_id == 'node_event_form'
+) {
+// To attach library
+$form['#attached']['library'][] = 'vol_events/google_core_map_api';
+// To make fieldgroup or any field access false/true
+$form['group_evt_teambuild_information']['#access'] = FALSE;
+// To fetch current user and role
+$user = \Drupal::currentUser();
+$roles = $user->getRoles();
+// To load form state object and content type( ex: page,article )
+$entity = $form_state->getFormObject()->getEntity();
+$entity->bundle() == 'event' &&
+$entity->hasField('field_evt_coordinators')
+// To get the current route name
+$route = \Drupal::routeMatch()->getRouteName();
+// To users to have permission.
+$user->hasPermission('view abc list')
+// To add class any field either disabled or visually-hidden
+$form['field_evt_non_profit_org']['#attributes']['class'] =
+['is-disabled', 'visually-hidden'];
+// To load any file field
+$filename = File::load($fileid)->getFilename();
+// To get moderation states
+$original_value_machine_name =
+$form['moderation_state']['widget'][0]['#default_value'];
+// To check the multiple values in an array
+if (in_array($original_value_machine_name, [
+'draft',
+'send_for_approval',
+])) { // do the operation }
+// To get value of a field
+$occurence_value = $entity->get('field_evt_occurence_type')->value;
+$duration_hours = $entity->get('field_evt_hours')->getValue();
+//To create a custom msg field
+$duration_warning_msg = '';
+$duration_warning_msg = '<div class="container messages-list__item
+messagesmessages--warning"><p><strong>Warning</p></div>';
+if ($duration_warning_msg) {
+$form['duration_warning_msg_info'] = [
+'#markup' => $duration_warning_msg,
+];
+}
+// Creating empty array
+$hours_credited = [];
+// To get multivalue paragraph fields
+$paragraph_shifts = $entity->get('field_evt_shift')->getValue();
+foreach ($paragraph_shifts as $element) {
+$evt_shifts = Paragraph::load($element['target_id']);
+$evt_shifts_targetid = $evt_shifts->field_evt_new_shift->getValue();
+foreach ($evt_shifts_targetid as $elementid) {
+$new_shifts = Paragraph::load($elementid['target_id']);
+$hours_credited[0]=$new_shifts->field_evt_shift_hours_credited->getValue()
+[0]['value'];
+// To load all the field or paragraph field value in a page once
+$evt_shift_values = $entity->get('field_evt_shift')->getValue();
+$paragraph_storage =
+\Drupal::entityTypeManager()->getStorage('paragraph');
+$ids = array_column($evt_shift_values, 'target_id');
+$paragraphs_ids = $paragraph_storage->loadMultiple($ids);
+$currentYear = date("Y");
+foreach ($paragraphs_ids as $paragraph) {
+$shift_date = $paragraph->get('field_evt_shift_date')->value;
+$shift_year = explode("-", $shift_date);
+$shift_evt_years[] = (int) $shift_year[0];
+}
+if (!in_array($currentYear, $shift_evt_years)) {
+$form['field_evt_shift']['widget']['add_more']['add_more_button_evt_shift'
+]['#access'] = FALSE;
+}
+// Ternanry operator
+$eventStatus = $original_value_machine_name == 'published' ? 'Published' :
+'Completed';
+// To make a field read-only
+$form['field_evt_occurence_ongoing']['widget'][0]['value']['#attributes'][
+'readonly']
+// On ajax call
+if ($form_id == 'node_event_edit_form' && $route ==
+'entity.node.edit_form' && ($node->get('moderation_state')->value ==
+'published' || $node->get('moderation_state')->value == 'completed' ||
+$node->get('moderation_state')->value == 'published_edit')) {
+$form['field_evt_occurence_ongoing']['widget'][0]['value']['#ajax'] =
+[
+'callback' => 'checkOngoingRSVPdata',
+'event' => 'change',
+];
+}
+}
+Implements hook_entity_update().
+function vol_events_entity_update(EntityInterface $entity) {
+Respond to updates to an entity.
+This hook runs once the entity storage has been updated. Note that hook
+implementations may not alter the stored entity data. Get the original
+entity object from $entity->original.
+}
+function vol_events_field_widget_form_alter(&$element, FormStateInterface
+$form_state, $context) { }
+Implements hook_mail()
+function vol_events_mail($key, &$message, $params) {
+// This hook is used for mail
+}
+Implements hook_system_breadcrumb_alter()
+function vol_events_system_breadcrumb_alter(Breadcrumb &$breadcrumb,
+RouteMatchInterface $route_match, array $context) {
+This hook is used for altering the breadcrumb.
+}
+Implements hook_menu_local_tasks_alter().
+function vol_events_menu_local_tasks_alter(&$data, $route_name) {
+This hook is used for altering the tabs for admin.
+$data['tabs']
+}
+Implements hook_cron.
+function vol_events_cron() {
+}
+Implements hook_cron.
+function view_password_preprocess_menu(&$variables) {
+if ($variables['menu_name'] == 'main') {
+$user = \Drupal::currentUser();
+$roles = $user->getRoles();
+foreach ($variables['items'] as &$item) {
+if ($item['title'] == 'About us') {
+if (in_array('content_editor', $roles)) {
+$item['url'] = Url::fromUri('https://www.google.com');
+} elseif (in_array('administrator', $roles)) {
+$item['url'] = Url::fromUri('http://drupal9.in/node/5');
+}
+}
+}
+}
+}
+Implements hook_form_FORM_ID_alter()
+function vol_access_form_node_community_edit_form_alter(&$form,
+FormStateInterface $form_state, $form_id) {
+This hook is used for editing particular contenttype node form
+}
+Implements hook_user_presave()
+function vol_access_user_presave(EntityInterface $user) {
+This hook is used for user after saved.
+}
+Implements hook_theme().
+function vol_impact_metrics_theme() {
+}
